@@ -1,52 +1,33 @@
-const defaultRecipes = [{
-        title: "Cheese Quesidilla",
-        mealType: "Lunch",
-        servingSize: 1,
-        difficulty: "easy",
-        ingredients: [{
-                item: "cheese",
-                amount: "1/4 cup"
-            },
-            {
-                item: "tortilla",
-                amount: "1"
-            },
-            {
-                item: "olive oil",
-                amount: "1/2 tsp"
-            }
-        ],
-        preparation: [
-            "Turn on oven burner to medium-low heat.",
-            "Add olive oil to medium size pan.",
-            "Place tortilla in pan and rotate to spread oil on underside of tortilla.",
-            "Make an even layer of cheese on 1/2 of the tortilla.",
-            "Once underside of tortilla is a nice brown, fold over the non-cheese side.",
-            "Cook for 3 minutes, flipping if needed.",
-            "Remove torilla from pan once cheese has melted."
-        ]
-    },
-    {
-        title: "Yogurt with Granola",
-        mealType: "Breakfast",
-        servingSize: 1,
-        difficulty: "easy",
-        ingredients: [{
-                item: "Yogurt",
-                amount: "150g"
-            },
-            {
-                item: "Granola",
-                amount: "50g"
-            }
-        ],
-        preparation: [
-            "Place 150g of yogurt into a bowl.",
-            "Pour 50g of granola on top of yogurt."
-        ]
+function ancestorHTML() {
+    const ancestor = document.createElement('div');
+    ancestor.classList.add("tile", "is-ancestor");
+    return ancestor;
+}
+
+function tileHTML(recipe) {
+    const parent = document.createElement('div');
+    parent.classList.add("tile", "is-parent", );
+    parent.innerHTML = `<div class="tile is-parent is-vertical box">
+                        <div class="tile is-child">
+                            <p class="title">${recipe.title}</p>
+                        </div>
+                        <div class="imgDiv">
+                            <img src="${recipe.img}">
+                        </div>
+                        </div>
+                        `;
+    return parent;
+}
+
+function displayRecipeTiles(recipes, container) {
+    for (let i = 0; i < recipes.length; i += 4) {
+        let ancestor = ancestorHTML();
+        for (let j = i; j < i + 4 && j < recipes.length; j++) {
+            ancestor.appendChild(tileHTML(recipes[j]));
+        }
+        container.appendChild(ancestor);
     }
-];
+}
 
-const jsonDefaultRecipes = JSON.stringify(defaultRecipes);
-
-console.log(defaultRecipes);
+const recipesContainer = document.getElementById('recipeTiles');
+displayRecipeTiles(defaultRecipes, recipesContainer);
