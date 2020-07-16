@@ -23,7 +23,6 @@ function tileHTML(recipe, container) {
         if (recipe >= 0) {
             console.log('do this');
             const recipeModal = makeRecipeModal(defaultRecipes[recipe]);
-            // recipeModal.style.display = "block";
 
             container.appendChild(recipeModal);
         }
@@ -112,5 +111,72 @@ window.onclick = function(e) {
     }
 }
 
+// const getData = () => {
+//     axios.get("https://www.themealdb.com/api/json/v1/1/random.php").then(response => {
+//         console.log(response.data.meals);
+//         localStorage.setItem("recipe", JSON.stringify(response.data.meals));
+//     });
+// }
+const testRecipe = JSON.parse(localStorage.getItem('recipe'));
+console.log(testRecipe[0]);
+
+function getIngredientsFromObj(testRecipe, newRecipe) {
+    for (const item in testRecipe) {
+        let ingredient = {
+            item: "",
+            amount: ""
+        };
+        if (item.match('strIngredient')) {
+            if (testRecipe[item] !== "" && testRecipe[item] !== null) {
+                let num = item.slice(13);
+                ingredient.item = testRecipe[item];
+                ingredient.amount = testRecipe[`strMeasure${num}`];
+                newRecipe.ingredients.push(ingredient);
+            }
+        }
+
+    }
+}
+
+function getPreparationFromObj({ strInstructions }, newRecipe) {
+    console.log(strInstructions);
+    const parts = strInstructions.split(/\r?\n/);
+    for (let part of parts) {
+        newRecipe.preparation.push(part);
+    }
+}
+
+function recipeTemplate() {
+    const recipeTemplate = {
+        img: "",
+        title: "",
+        mealType: "",
+        servingSize: 0,
+        difficulty: "",
+        ingredients: [],
+        preparation: []
+    };
+    return recipeTemplate;
+}
+
+function createRecipe(testRecipe, newRecipe) {
+    newRecipe.img = testRecipe.strMealThumb;
+    newRecipe.title = testRecipe.strMeal;
+    newRecipe.mealType = testRecipe.strCategory;
+    newRecipe.servingSize = (testRecipe.servingSize ? testRecipe.servingSize : 0);
+    newRecipe.difficulty = (testRecipe.difficulty ? testRecipe.difficulty : "No Information");
+    getIngredientsFromObj(testRecipe, newRecipe);
+    getPreparationFromObj(testRecipe, newRecipe);
+
+}
+
+const newRecipe = recipeTemplate();
+
 const recipesContainer = document.getElementById('recipeTiles');
+// getIngredientsFromObj(testRecipe[0]);
+createRecipe(testRecipe[0], newRecipe);
+defaultRecipes.unshift(newRecipe);
+console.log(newRecipe);
 displayRecipeTiles(defaultRecipes, recipesContainer);
+
+// getData();
