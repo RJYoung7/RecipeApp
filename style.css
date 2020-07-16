@@ -17,3 +17,36 @@ img {
 .imgDiv {
     height: 375px;
 }
+
+.modal-background {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+#brandName {
+    font-size: 25px;
+    color: rgb(7, 151, 199);
+    font-weight: bold;
+}
+
+#modalImg {
+    width: 100% !important;
+    height: inherit !important;
+}
+
+.recipe-section {
+    width: 30%;
+    height: 250px;
+    float: right;
+}
+
+.recipe-section-header {
+    font-weight: bold;
+}
+
+.recipe-info {
+    padding-bottom: 15px;
+}
+
+.recipe-info p {
+    padding-top: 0 !important;
+}
