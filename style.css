@@ -50,3 +50,7 @@ img {
 .recipe-info p {
     padding-top: 0 !important;
 }
+
+ol {
+    padding-left: 1rem !important;
+}
