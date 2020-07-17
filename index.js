@@ -69,9 +69,21 @@ const searchRecipes = (searchStr) => {
             displayRecipeTiles(recipesContainer, foundRecipesList);
 
         } else {
-            alert("No Recipes Found");
+            const navBar = document.querySelector('.navbar-start');
+            const notFound = recipesNotFound();
+            navBar.appendChild(notFound);
+            window.setTimeout(() => {
+                navBar.removeChild(notFound);
+            }, 3500);
         }
     });
+}
+
+function recipesNotFound() {
+    const navItem = document.createElement('a');
+    navItem.classList.add('navbar-item', 'fade-out');
+    navItem.innerText = "No Recipes Found";
+    return navItem;
 }
 
 // Get recipes from local storage
@@ -88,4 +100,10 @@ const search = document.getElementById('searchButton').addEventListener('click',
     const recipeToSearch = document.getElementById('searchInput');
     searchRecipes(recipeToSearch.value);
     recipeToSearch.value = "";
+});
+
+// Event listener for My Recipes anchor tag
+const myRecipes = document.getElementById('myRecipes').addEventListener('click', () => {
+    recipesContainer.innerHTML = "";
+    displayRecipeTiles(recipesContainer, recipeList);
 });
