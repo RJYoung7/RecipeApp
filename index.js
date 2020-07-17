@@ -58,7 +58,6 @@ const searchRecipes = (searchStr) => {
     let foundRecipesData;
     axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchStr}`).then(response => {
         foundRecipesData = response.data.meals;
-        console.log(response);
 
         if (foundRecipesData) {
             const foundRecipesList = [];
@@ -66,7 +65,7 @@ const searchRecipes = (searchStr) => {
                 foundRecipesList.push(createRecipe(recipe));
             }
             recipesContainer.innerHTML = "";
-            displayRecipeTiles(recipesContainer, foundRecipesList);
+            displayRecipeTiles(recipesContainer, true, foundRecipesList);
 
         } else {
             const navBar = document.querySelector('.navbar-start');
@@ -93,7 +92,7 @@ const recipeList = JSON.parse(localStorage.getItem('recipeList'));
 const recipesContainer = document.getElementById('recipeTiles');
 
 // Create and append recipes to container
-displayRecipeTiles(recipesContainer, recipeList);
+displayRecipeTiles(recipesContainer, false, recipeList);
 
 // Add an event listener to the search button
 const search = document.getElementById('searchButton').addEventListener('click', () => {
@@ -102,8 +101,17 @@ const search = document.getElementById('searchButton').addEventListener('click',
     recipeToSearch.value = "";
 });
 
+//Event listener to detect a key press of enter
+const enter = document.getElementById('searchInput').addEventListener("keyup", (e) => {
+    if (e.keyCode === 13) {
+        document.getElementById('searchButton').click();
+    }
+})
+
 // Event listener for My Recipes anchor tag
 const myRecipes = document.getElementById('myRecipes').addEventListener('click', () => {
     recipesContainer.innerHTML = "";
-    displayRecipeTiles(recipesContainer, recipeList);
+    const recipeList = JSON.parse(localStorage.getItem('recipeList'));
+
+    displayRecipeTiles(recipesContainer, false, recipeList);
 });
