@@ -85,6 +85,9 @@ function recipesNotFound() {
     return navItem;
 }
 
+if (localStorage.getItem('recipeList') === null) {
+    localStorage.setItem('recipeList', JSON.stringify(defaultRecipes));
+}
 // Get recipes from local storage
 const recipeList = JSON.parse(localStorage.getItem('recipeList'));
 

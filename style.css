@@ -3,6 +3,11 @@ p {
     padding-bottom: 0 !important;
 }
 
+footer p {
+    font-size: large;
+    font-weight: bold;
+}
+
 img {
     max-width: 100% !important;
     width: 100% !important;
