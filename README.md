@@ -1,3 +1,4 @@
 # Recipe App
 ***
-In this app a user can search for and view recipes.
+The app allows a user to search for, save, and delete recipes.
+![LandingPage.png](./Images/)
